@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <!-- 公共装饰器 -->
+    <screen name="main-decorator">
+        <section>
+            <actions>
+
+                <!-- 网店数据初始化 -->
+                <script location="component://bm-ecommerce/widget/EcommerceSetup.groovy"/>
+
+                <!-- 网站logo -->
+                <set field="overrideLogo" value="/bigmangoo/images/uploads/bm-logo.png" global="true"/>
+
+            </actions>
+            <widgets>
+                <section>
+                    <condition>
+                        <not><if-empty field="globalContext.productStore"/></not>
+                    </condition>
+                    <widgets>
+
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/common/header.ftl"/></html>
+                        </platform-specific>
+
+                        <container style="container">
+                            <decorator-section-include name="body"/>
+                        </container>
+
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/common/footer.ftl"/></html>
+                        </platform-specific>
+
+                    </widgets>
+                    <fail-widgets>
+                        <label text="当前网站未指定店铺"/>
+                    </fail-widgets>
+                </section>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 基础装饰器 -->
+    <screen name="base-decorator">
+        <section>
+            <actions>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="main-decorator">
+                    <decorator-section name="body">
+
+                        <container style="container">
+
+                            <!-- 网站标题，网站搜索框，个人快速操作栏 -->
+                            <platform-specific>
+                                <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/common/site-header.ftl"/></html>
+                            </platform-specific>
+
+                            <!-- 网站目录导航 -->
+                            <include-screen name="siteCatalogWidget" location="component://bm-ecommerce/widget/bm-ecommerce/CatalogScreens.xml"/>
+
+                            <decorator-section-include name="body"/>
+
+                        </container>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 双栏装饰器 左 -->
+    <screen name="double-column-base-decorator_left">
+        <section>
+            <widgets>
+                <decorator-screen name="base-decorator">
+                    <decorator-section name="body">
+
+                        <container style="row">
+
+                            <container style="col-md-2">
+                                <include-screen name="${leftbarScreenName}" location="${leftbarScreenLocation}"/>
+                            </container>
+
+                            <container style="col-md-10">
+                                <decorator-section-include name="body"/>
+                            </container>
+
+                        </container>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 双栏装饰器 右     -->
+    <screen name="double-column-base-decorator_right">
+        <section>
+            <widgets>
+                <decorator-screen name="base-decorator">
+                    <decorator-section name="body">
+
+                        <container style="row">
+
+                            <container style="col-md-10">
+                                <decorator-section-include name="body"/>
+                            </container>
+
+                            <container style="col-md-2">
+                                <include-screen name="${rightbarScreenName}" location="${rightbarScreenLocation}"/>
+                            </container>
+
+                        </container>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 三栏装饰器 -->
+    <screen name="three-column-base-decorator">
+        <section>
+            <widgets>
+                <decorator-screen name="base-decorator">
+                    <decorator-section name="body">
+
+                        <container style="row">
+                            <container style="col-md-2">
+                                <include-screen name="${leftbarScreenName}" location="${leftbarScreenLocation}"/>
+                            </container>
+                            <container style="col-md-8">
+                                <decorator-section-include name="body"/>
+                            </container>
+                            <container style="col-md-2">
+                                <include-screen name="${rightbarScreenName}" location="${rightbarScreenLocation}"/>
+                            </container>
+                        </container>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+</screens>

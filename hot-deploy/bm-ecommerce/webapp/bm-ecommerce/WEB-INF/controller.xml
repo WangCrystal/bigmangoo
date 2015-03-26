@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/site-conf.xsd">
+    <description>OFBiz: eCommerce Controller Configuration File</description>
+    <errorpage>/error/error.jsp</errorpage>
+
+    <handler name="java" type="request" class="org.ofbiz.webapp.event.JavaEventHandler"/>
+    <handler name="bsf" type="request" class="org.ofbiz.webapp.event.BsfEventHandler"/>
+    <handler name="soap" type="request" class="org.ofbiz.webapp.event.SOAPEventHandler"/>
+    <handler name="service" type="request" class="org.ofbiz.webapp.event.ServiceEventHandler"/>
+    <handler name="service-multi" type="request" class="org.ofbiz.webapp.event.ServiceMultiEventHandler"/>
+    <handler name="simple" type="request" class="org.ofbiz.webapp.event.SimpleEventHandler"/>
+    <handler name="rome" type="request" class="org.ofbiz.webapp.event.RomeEventHandler"/>
+
+    <handler name="jsp" type="view" class="org.ofbiz.webapp.view.JspViewHandler"/>
+    <handler name="http" type="view" class="org.ofbiz.webapp.view.HttpViewHandler"/>
+    <handler name="screen" type="view" class="org.ofbiz.widget.screen.MacroScreenViewHandler"/>
+    <handler name="simplecontent" type="view" class="org.ofbiz.content.view.SimpleContentViewHandler"/>
+    <handler name="screenfop" type="view" class="org.ofbiz.widget.screen.ScreenFopViewHandler"/>
+
+    <!-- Events run from here for the first hit in a visit -->
+    <firstvisit>
+        <event name="autoLoginCheck" type="java" path="org.ofbiz.webapp.control.LoginWorker" invoke="autoLoginCheck"/>
+        <event name="checkTrackingCodeCookies" type="java" path="org.ofbiz.marketing.tracking.TrackingCodeEvents" invoke="checkTrackingCodeCookies"/>
+        <event name="setDefaultStoreSettings" type="java" path="org.ofbiz.product.product.ProductEvents" invoke="setDefaultStoreSettings"/>
+        <event name="createGuestShoppingListCookies" type="java" path="org.ofbiz.order.shoppinglist.ShoppingListEvents" invoke="createGuestShoppingListCookies"/>
+        <event name="restoreAutoSaveList" type="java" path="org.ofbiz.order.shoppinglist.ShoppingListEvents" invoke="restoreAutoSaveList"/>
+    </firstvisit>
+
+    <!-- Events to run on every request before security (chains exempt) -->
+    <preprocessor>
+        <!-- This event allows affilate/distributor entry on any page -->
+        <event name="checkExternalLoginKey" type="java" path="org.ofbiz.webapp.control.LoginWorker" invoke="checkExternalLoginKey"/>
+        <event name="setAssociationId" type="java" path="org.ofbiz.ecommerce.misc.ThirdPartyEvents" invoke="setAssociationId"/>
+        <event name="checkTrackingCodeUrlParam" type="java" path="org.ofbiz.marketing.tracking.TrackingCodeEvents" invoke="checkTrackingCodeUrlParam"/>
+        <event name="checkPartnerTrackingCodeUrlParam" type="java" path="org.ofbiz.marketing.tracking.TrackingCodeEvents" invoke="checkPartnerTrackingCodeUrlParam"/>
+        <event name="keepCartUpdated" type="java" path="org.ofbiz.order.shoppingcart.ShoppingCartEvents" invoke="keepCartUpdated"/>
+    </preprocessor>
+
+    <after-login>
+        <event name="updateAssociatedDistributor" type="java" path="org.ofbiz.ecommerce.misc.ThirdPartyEvents" invoke="updateAssociatedDistributor"/>
+        <event name="keepCartUpdated" type="java" path="org.ofbiz.order.shoppingcart.ShoppingCartEvents" invoke="keepCartUpdated"/>
+        <!-- after login, get everything from the auto-save list -->
+        <event name="restoreAutoSaveList" type="java" path="org.ofbiz.order.shoppinglist.ShoppingListEvents" invoke="restoreAutoSaveList"/>
+        <!-- after login and restoring from the auto-save list, save everything to the auto-save list to handle anything that may have already been in the cart before login -->
+        <event name="saveCartToAutoSaveList" type="java" path="org.ofbiz.order.shoppinglist.ShoppingListEvents" invoke="saveCartToAutoSaveList"/>
+        <event name="clearGuestShoppingListCookies" type="java" path="org.ofbiz.order.shoppinglist.ShoppingListEvents" invoke="clearGuestShoppingListCookies"/>
+    </after-login>
+
+    <!-- Security Request Mappings -->
+    <request-map uri="checkLogin" edit="false">
+        <description>Verify a user is logged in.</description>
+        <security https="true" auth="false"/>
+        <event type="java" path="org.ofbiz.securityext.login.LoginEvents" invoke="storeCheckLogin"/>
+        <response name="success" type="view" value="main"/>
+        <response name="error" type="view" value="login"/>
+    </request-map>
+    <request-map uri="login">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.ofbiz.securityext.login.LoginEvents" invoke="storeLogin"/>
+        <response name="success" type="view" value="main"/>
+        <response name="requirePasswordChange" type="view" value="requirePasswordChange"/>
+        <response name="error" type="view" value="login"/>
+    </request-map>
+    <request-map uri="logout">
+        <security https="true" auth="true"/>
+        <event type="java" path="org.ofbiz.webapp.control.LoginWorker" invoke="logout"/>
+        <response name="success" type="request-redirect" value="main"/>
+        <response name="error" type="view" value="main"/>
+    </request-map>
+    <request-map uri="autoLogout">
+        <security https="true" auth="false"/>
+        <event type="java" path="org.ofbiz.webapp.control.LoginWorker" invoke="autoLoginRemove"/>
+        <response name="success" type="request-redirect" value="main"/>
+        <response name="error" type="view" value="main"/>
+    </request-map>
+    <!-- End of Security Mappings -->
+
+    <!-- 请求 -->
+    <!-- 首页 -->
+    <request-map uri="main"><security https="false" auth="false"/><response name="success" type="view" value="main"/></request-map>
+    <!-- 注册用户 -->
+    <request-map uri="newcustomer"><security https="false" auth="false"/><response name="success" type="view" value="newcustomer"/></request-map>
+
+    <!-- 产品展示相关 -->
+    <!-- 产品分类列表页面 -->
+    <request-map uri="productCategoryList"><security https="false" auth="false"/><response name="success" type="view" value="productCategoryList"/></request-map>
+    <!-- 产品详细页面 -->
+    <request-map uri="productDetail"><security https="false" auth="false"/><response name="success" type="view" value="productDetail"/></request-map>
+
+    <!-- 购物车相关 -->
+    <!-- 购物车界面 -->
+    <request-map uri="showcart"><security https="false" auth="false"/><response name="success" type="view" value="showcart"/></request-map>
+    <!-- 结算界面 -->
+    <request-map uri="checkout"><security https="false" auth="false"/><response name="success" type="view" value="checkout"/></request-map>
+
+    <!-- 用户相关 -->
+    <!-- 基本信息 -->
+    <request-map uri="customerInfo"><security https="false" auth="false"/><response name="success" type="view" value="customerInfo"/></request-map>
+    <!-- 订单管理 -->
+    <request-map uri="orderHistory"><security https="false" auth="false"/><response name="success" type="view" value="orderHistory"/></request-map>
+    <!-- 订单详情 -->
+    <request-map uri="orderDetail"><security https="false" auth="false"/><response name="success" type="view" value="orderDetail"/></request-map>
+    <!-- 我的密码 -->
+    <request-map uri="changepassword"><security https="false" auth="false"/><response name="success" type="view" value="changepassword"/></request-map>
+    <!-- 地址管理 -->
+    <request-map uri="customerAddress"><security https="false" auth="false"/><response name="success" type="view" value="customerAddress"/></request-map>
+
+    <!-- 试图 -->
+    <view-map name="main" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/HomeScreens.xml#main"/>
+    <!-- 登陆 -->
+    <view-map name="login" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/HomeScreens.xml#login"/>
+    <!-- 注册用户 -->
+    <view-map name="newcustomer" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/HomeScreens.xml#newcustomer"/>
+
+    <!-- 产品展示相关 -->
+    <view-map name="productCategoryList" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/ProductScreens.xml#productCategoryList"/>
+    <view-map name="productDetail" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/ProductScreens.xml#productDetail"/>
+
+    <!-- 购物车相关 -->
+    <view-map name="showcart" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/CartScreens.xml#showcart"/>
+    <view-map name="checkout" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/CartScreens.xml#checkout"/>
+
+    <!-- 用户相关 -->
+    <view-map name="customerInfo" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml#customerInfo"/>
+    <view-map name="orderHistory" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml#orderHistory"/>
+    <view-map name="orderDetail" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml#orderDetail"/>
+    <view-map name="changepassword" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml#changepassword"/>
+    <view-map name="customerAddress" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml#customerAddress"/>
+
+</site-conf>

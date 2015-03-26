@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/widget-screen.xsd">
+
+    <!-- 用户基本信息管理 -->
+    <screen name="customerInfo">
+        <section>
+            <actions>
+
+                <!-- 网站分类列表 -->
+                <set field="leftbarScreenName" value="personNavWidget" global="true"/>
+                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml" global="true"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="three-column-base-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/person/customerInfo.ftl"/></html>
+                        </platform-specific>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 客户订单管理 -->
+    <screen name="orderHistory">
+        <section>
+            <actions>
+
+                <!-- 网站分类列表 -->
+                <set field="leftbarScreenName" value="personNavWidget" global="true"/>
+                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml" global="true"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="three-column-base-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/person/orderHistory.ftl"/></html>
+                        </platform-specific>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 客户订单详情 -->
+    <screen name="orderDetail">
+        <section>
+            <actions>
+
+                <!-- 网站分类列表 -->
+                <set field="leftbarScreenName" value="personNavWidget" global="true"/>
+                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/PersonScreens.xml" global="true"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="three-column-base-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/person/orderDetail.ftl"/></html>
+                        </platform-specific>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 更改用户密码 -->
+    <screen name="changepassword">
+        <section>
+            <actions>
+
+                <!-- 网站分类列表 -->
+                <set field="leftbarScreenName" value="personNavWidget" global="true"/>
+                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/PersonScreens.xml" global="true"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="three-column-base-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/person/changepassword.ftl"/></html>
+                        </platform-specific>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 用户收货地址管理 -->
+    <screen name="customerAddress">
+        <section>
+            <actions>
+
+                <!-- 网站分类列表 -->
+                <set field="leftbarScreenName" value="personNavWidget" global="true"/>
+                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/PersonScreens.xml" global="true"/>
+
+            </actions>
+            <widgets>
+                <decorator-screen name="three-column-base-decorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/person/customerAddress.ftl"/></html>
+                        </platform-specific>
+
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <!-- 个人中心左侧导航栏 -->
+    <screen name="personNavWidget">
+        <section>
+            <actions>
+            </actions>
+            <widgets>
+
+                <platform-specific>
+                    <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/person/personNavWidget.ftl"/></html>
+                </platform-specific>
+
+            </widgets>
+        </section>
+    </screen>
+
+</screens>
