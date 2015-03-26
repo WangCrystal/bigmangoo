@@ -1,2 +1,2 @@
-#ofbiz4china
-符合国人操作习惯的ofbiz版本
+#bigmangoo
+大芒果电子商务系统
