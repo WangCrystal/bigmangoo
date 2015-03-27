@@ -16,11 +16,6 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<ol class="breadcrumb">
-    <li><a href="#">首页</a></li>
-    <li class="active">鞋子</li>
-</ol>
-
 
     <#if productCategoryMembers?has_content>
     <div class="row">
@@ -54,7 +49,7 @@ under the License.
                                 </strong>
                             </p>
 
-                            <a class="btn btn-primary btn-large btn-block" target="_blank" href="<@ofbizUrl>productDetail?productId=${(productCategoryMember.productId)!}</@ofbizUrl>">详情</a>
+                            <a class="btn btn-primary btn-large btn-block" target="_blank" href="<@ofbizUrl>checkProductId?productId=${(productCategoryMember.productId)!}</@ofbizUrl>">详情</a>
 
                         </div>
                     </div>

@@ -38,6 +38,9 @@ under the License.
                 <decorator-screen name="double-column-base-decorator_left" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
 
+                        <!-- 面包屑 -->
+                        <include-screen name="breadcrumbWidget" location="component://bm-ecommerce/widget/bm-ecommerce/CatalogScreens.xml"/>
+
                         <platform-specific>
                             <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/product/productCategoryList.ftl"/></html>
                         </platform-specific>
@@ -62,6 +65,9 @@ under the License.
             <widgets>
                 <decorator-screen name="double-column-base-decorator_right" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
+
+                        <!-- 面包屑 -->
+                        <include-screen name="breadcrumbWidget" location="component://bm-ecommerce/widget/bm-ecommerce/CatalogScreens.xml"/>
 
                         <platform-specific>
                             <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/product/productDetail.ftl"/></html>

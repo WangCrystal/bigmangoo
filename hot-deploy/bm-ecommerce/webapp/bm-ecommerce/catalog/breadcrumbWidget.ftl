@@ -16,17 +16,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<ul class="list-group">
-    <#if categoryTree?has_content && categoryTree.childs?has_content>
-        <#list categoryTree.childs as categoryTreeMap>
-            <li class="list-group-item">
-                <a href="<@ofbizUrl>productCategoryList?category_id=${(categoryTreeMap.productCategoryId)!}</@ofbizUrl>">
-                <#if categoryTreeMap.categoryName?has_content>
-                    ${(categoryTreeMap.categoryName)!}
-                </#if>
-                </a>
-            </li>
-        </#list>
-    </#if>
-
-</ul>
+<ol class="breadcrumb">
+    <li><a href="<@ofbizUrl>main</@ofbizUrl>">首页</a></li>
+    <li class="active">鞋子</li>
+</ol>

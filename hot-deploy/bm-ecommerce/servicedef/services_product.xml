@@ -22,12 +22,23 @@ under the License.
           xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
     <description>产品相关的服务</description>
 
+    <!-- 通过产品ID校验当前商品是否被支持 -->
+    <service name="checkProductId" engine="java"
+             location="com.bigmangoo.product.ProductServices" invoke="checkProductId">
+        <description>通过产品ID校验当前商品是否被支持</description>
+        <attribute name="productId" type="String" mode="IN" optional="false"/>
+        <attribute name="variantProductId" type="String" mode="OUT" optional="false"/>
+    </service>
+
     <!-- 通过产品ID取得商品的基本属性 -->
     <service name="getProductDetailById" engine="java"
              location="com.bigmangoo.product.ProductServices" invoke="getProductDetailById">
         <description>取得商品的详细页面需要显示的信息</description>
-        <attribute name="productId" type="String" mode="INOUT" optional="false"/>
+        <attribute name="productId" type="String" mode="IN" optional="false"/>
+        <attribute name="productStore" type="org.ofbiz.entity.GenericValue" mode="IN" optional="false"/>
         <attribute name="productInfo" type="Map" mode="OUT" optional="false"/>
+        <attribute name="productImages" type="List" mode="OUT" optional="true"/>
+        <attribute name="productFeature" type="List" mode="OUT" optional="true"/>
     </service>
 
 </services>

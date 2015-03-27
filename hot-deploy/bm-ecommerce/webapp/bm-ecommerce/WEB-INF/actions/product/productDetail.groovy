@@ -17,8 +17,10 @@
  * under the License.
  */
 
-import org.ofbiz.product.product.ProductWorker
+import org.ofbiz.product.store.ProductStoreWorker
 
-def product = delegator.findOne("Product",["productId":productId],true)
-context.product = product
-
+//调用服务取得产品基本数据
+def productStore = ProductStoreWorker.getProductStore(request)
+def serviceResult = dispatcher.runSync("getProductDetailById",[productId: productId, productStore:productStore])
+context.productInfo = serviceResult.productInfo
+context.productImages = serviceResult.productImages

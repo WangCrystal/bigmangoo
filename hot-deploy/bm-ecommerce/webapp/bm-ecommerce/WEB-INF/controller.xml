@@ -104,8 +104,20 @@ under the License.
     <!-- 产品展示相关 -->
     <!-- 产品分类列表页面 -->
     <request-map uri="productCategoryList"><security https="false" auth="false"/><response name="success" type="view" value="productCategoryList"/></request-map>
+    <!-- 校验产品ID -->
+    <request-map uri="checkProductId">
+        <security https="false" auth="false"/>
+        <event type="service" invoke="checkProductId"/>
+        <response name="success" type="request-redirect" value="productDetail">
+            <redirect-parameter name="productId" from="variantProductId"/>
+        </response>
+        <response name="error" type="view" value="showcart"/>
+    </request-map>
     <!-- 产品详细页面 -->
-    <request-map uri="productDetail"><security https="false" auth="false"/><response name="success" type="view" value="productDetail"/></request-map>
+    <request-map uri="productDetail">
+        <security https="false" auth="false"/>
+        <response name="success" type="view" value="productDetail"/>
+    </request-map>
 
     <!-- 购物车相关 -->
     <!-- 购物车界面 -->

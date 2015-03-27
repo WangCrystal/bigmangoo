@@ -30,6 +30,7 @@ under the License.
     <entity-resource type="data" reader-name="demo" loader="main" location="data/BM-EcommerceDemoData.xml"/>
 
     <service-resource type="model" loader="main" location="servicedef/services_product.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_category.xml"/>
 
     <test-suite loader="main" location="testdef/BM-EcommerceTests.xml"/>
 

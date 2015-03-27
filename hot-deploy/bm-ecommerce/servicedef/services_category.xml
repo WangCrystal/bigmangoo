@@ -1,4 +1,5 @@
-<#--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
 distributed with this work for additional information
@@ -16,17 +17,17 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<ul class="list-group">
-    <#if categoryTree?has_content && categoryTree.childs?has_content>
-        <#list categoryTree.childs as categoryTreeMap>
-            <li class="list-group-item">
-                <a href="<@ofbizUrl>productCategoryList?category_id=${(categoryTreeMap.productCategoryId)!}</@ofbizUrl>">
-                <#if categoryTreeMap.categoryName?has_content>
-                    ${(categoryTreeMap.categoryName)!}
-                </#if>
-                </a>
-            </li>
-        </#list>
-    </#if>
 
-</ul>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>分类相关的服务</description>
+
+    <!-- 通过目录ID取得当前目录下所有的分类 -->
+    <service name="getCategoryTreeByCatalogId" engine="java"
+             location="com.bigmangoo.category.CategoryServices" invoke="getCategoryTreeByCatalogId">
+        <description>通过目录ID取得分类树的信息</description>
+        <attribute name="currentCatalogId" type="String" mode="IN" optional="false"/>
+        <attribute name="categoryTree" type="Map" mode="OUT" optional="false"/>
+     </service>
+
+</services>

@@ -17,12 +17,4 @@
  * under the License.
  */
 
-import org.ofbiz.product.catalog.CatalogWorker
-
-//取得当前目录ID
-def currentCatalogId = CatalogWorker.getCurrentCatalogId(request)
-
-//调用服务取得数据
-def serviceResult = dispatcher.runSync("getCategoryTreeByCatalogId",[currentCatalogId: currentCatalogId])
-def categoryTree = serviceResult.categoryTree
-context.categoryTree = categoryTree
+//TODO 根据当前id向上迭代取得层级id

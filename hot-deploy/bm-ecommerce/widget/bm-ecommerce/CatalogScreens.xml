@@ -57,4 +57,23 @@ under the License.
         </section>
     </screen>
 
+    <!-- 网站面包屑 -->
+        <screen name="breadcrumbWidget">
+        <section>
+            <actions>
+
+                <script location="component://bm-ecommerce/webapp/bm-ecommerce/WEB-INF/actions/catalog/breadcrumbWidget.groovy"/>
+
+            </actions>
+            <widgets>
+
+                <platform-specific>
+                    <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/catalog/breadcrumbWidget.ftl"/></html>
+                </platform-specific>
+
+            </widgets>
+        </section>
+    </screen>
+
+
 </screens>

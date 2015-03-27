@@ -21,7 +21,7 @@ under the License.
     <div class="col-md-4">
 
         <#if overrideLogo?exists>
-            <img src="${overrideLogo}" width="270" height="60" alt="京东">
+            <a href="<@ofbizUrl>main</@ofbizUrl>"><img src="${overrideLogo}" width="270" height="60" alt="京东"></a>
         <#else>
             请设置网站logo
         </#if>

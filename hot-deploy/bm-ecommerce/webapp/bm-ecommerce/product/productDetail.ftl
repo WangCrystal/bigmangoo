@@ -16,18 +16,14 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<ol class="breadcrumb">
-    <li><a href="#">首页</a></li>
-    <li><a href="#">鞋子</a></li>
-    <li class="active">阿迪达斯男士运动鞋</li>
-</ol>
 
 <div class="row well">
 
     <div class="col-md-4">
-        <#assign largeImageUrl = product?if_exists.largeImageUrl?if_exists />
-        <#if largeImageUrl?string?has_content>
-            <img style="max-width:100%;" src="${largeImageUrl?if_exists}" alt="">
+        <#if productImages?has_content>
+            <#list productImages as productImage>
+                <img style="max-width:100%;" src="${productImage?if_exists}" alt="">
+            </#list>
         <#else>
             <img style="max-width:100%;" src="/images/defaultImage.jpg" alt="">
         </#if>
@@ -35,22 +31,20 @@ under the License.
     </div>
 
     <div class="col-md-8">
+        <#if productInfo?has_content>
 
-        <strong>
-            阿迪达斯男士运动鞋
-        </strong>
+            <strong>
+                ${(productInfo.productName)!}
+            </strong>
 
-        <h6 style="color:red;">
+            <h6 style="color:red;">
+                <#--${(productInfo.productPrice)!}-->
 
-            <#assign productAndPriceViewList = delegator.findByAnd("ProductAndPriceView", {"productId" : product.productId , "productPriceTypeId" : "LIST_PRICE"})>
-            <#if productAndPriceViewList?has_content>
-                <#assign productAndPriceView = Static["org.ofbiz.entity.util.EntityUtil"].getFirst(productAndPriceViewList)>
-                <#if productAndPriceView?has_content>
-                    $${(productAndPriceView.price)!}
-                </#if>
-            </#if>
+                <@ofbizCurrency amount=productInfo.productPrice isoCode=productInfo.productUomId/>
 
-        </h6>
+            </h6>
+
+        </#if>
 
         <form role="form">
             <div class="form-group">
