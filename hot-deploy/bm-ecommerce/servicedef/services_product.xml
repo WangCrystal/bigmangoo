@@ -38,7 +38,7 @@ under the License.
         <attribute name="productStore" type="org.ofbiz.entity.GenericValue" mode="IN" optional="false"/>
         <attribute name="productInfo" type="Map" mode="OUT" optional="false"/>
         <attribute name="productImages" type="List" mode="OUT" optional="true"/>
-        <attribute name="productFeature" type="List" mode="OUT" optional="true"/>
+        <attribute name="productFeatures" type="List" mode="OUT" optional="true"/>
     </service>
 
 </services>

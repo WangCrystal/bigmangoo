@@ -24,3 +24,4 @@ def productStore = ProductStoreWorker.getProductStore(request)
 def serviceResult = dispatcher.runSync("getProductDetailById",[productId: productId, productStore:productStore])
 context.productInfo = serviceResult.productInfo
 context.productImages = serviceResult.productImages
+context.productFeatures = serviceResult.productFeatures

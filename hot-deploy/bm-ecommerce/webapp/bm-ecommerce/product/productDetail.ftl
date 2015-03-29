@@ -38,7 +38,6 @@ under the License.
             </strong>
 
             <h6 style="color:red;">
-                <#--${(productInfo.productPrice)!}-->
 
                 <@ofbizCurrency amount=productInfo.productPrice isoCode=productInfo.productUomId/>
 
@@ -46,59 +45,29 @@ under the License.
 
         </#if>
 
-        <form role="form">
-            <div class="form-group">
-                <strong class='col-md-2'>颜色</strong>
-                <div class="col-md-10">
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-primary">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                    <a href="#"><span class="label label-default">红色</span></a>
-                </div>
-            </div>
-        </form>
+        <#if productFeatures?has_content>
+            <#list productFeatures as productFeature>
 
-        <form role="form">
-            <div class="form-group">
-                <strong class='col-md-2'>尺寸</strong>
-                <div class="col-md-10">
-                    <a href="#"><span class="label label-primary">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                    <a href="#"><span class="label label-default">2码</span></a>
-                    <a href="#"><span class="label label-default">4码</span></a>
-                </div>
-            </div>
-        </form>
+                <form role="form">
+                    <div class="form-group">
+                        <strong class='col-md-2'>${(productFeature.productFeatureTypeId)!}</strong>
+                        <div class="col-md-10">
+                            <#if productFeature.productSelectFeatureList?has_content>
+                                <#list productFeature.productSelectFeatureList as productSelectFeature>
+                                    <#if productSelectFeature.selected == "true">
+                                        <a href="#"><span class="label label-primary">${(productSelectFeature.description)!}</span></a>
+                                    <#elseif productSelectFeature.selected == "false">
+                                        <a href="#"><span class="label label-default">${(productSelectFeature.description)!}</span></a>
+                                    </#if>
+                                </#list>
+                            </#if>
+                        </div>
+                    </div>
+                </form>
+
+            </#list>
+
+        </#if>
 
         <form class="form-inline">
             <div class="form-group" style="margin-top:10px;">

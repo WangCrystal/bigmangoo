@@ -23,6 +23,7 @@ import javolution.util.FastList;
 import javolution.util.FastMap;
 import org.ofbiz.base.util.Debug;
 import org.ofbiz.base.util.UtilMisc;
+import org.ofbiz.base.util.UtilValidate;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericEntityException;
 import org.ofbiz.entity.GenericValue;
@@ -34,6 +35,7 @@ import org.ofbiz.service.DispatchContext;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -104,10 +106,10 @@ public class ProductServices {
         //获取商品的基本信息
         Map<String, Object> productInfo = FastMap.newInstance();
         try{
-            List<GenericValue> productPriceViewList = delegator.findByAndCache("ProductAndPriceView",UtilMisc.toMap("productId",productId,"currencyUomId",productStore.getString("defaultCurrencyUomId"),"productPriceTypeId","DEFAULT_PRICE","productPricePurposeId","PURCHASE"));
+            List<GenericValue> productPriceViewList = delegator.findByAndCache("ProductAndPriceView", UtilMisc.toMap("productId", productId, "currencyUomId", productStore.getString("defaultCurrencyUomId"), "productPriceTypeId", "DEFAULT_PRICE", "productPricePurposeId", "PURCHASE"));
             productPriceViewList = EntityUtil.filterByDate(productPriceViewList);
             GenericValue productPriceViewMap = EntityUtil.getFirst(productPriceViewList);
-            productInfo.put("productName",productPriceViewMap.getString("productName"));//产品名称
+            productInfo.put("productName", productPriceViewMap.getString("productName"));//产品名称
             productInfo.put("productPrice",productPriceViewMap.getString("price"));//产品价格
             productInfo.put("productUomId",productPriceViewMap.getString("currencyUomId"));//产品价格uom
         } catch (GenericEntityException e) {
@@ -134,7 +136,68 @@ public class ProductServices {
         }
 
         //获取产品可选特征
+        try{
 
+            List<GenericValue> productVariants = delegator.findByAndCache("ProductAndAssoc", UtilMisc.toMap("productIdTo", productId, "productAssocTypeId", "PRODUCT_VARIANT"), UtilMisc.toList("fromDate"));
+            GenericValue productVariant = EntityUtil.getFirst(productVariants);
+            if(UtilValidate.isNotEmpty(productVariant)){
+
+                List<Object> productFeatures = FastList.newInstance();
+
+                //查找当前商品的虚拟id，取得虚拟id的相关属性
+                String productVariantId = productVariant.getString("productId");
+                List<GenericValue> productFeatureAndAppls = delegator.findByAndCache("ProductFeatureAndAppl", UtilMisc.toMap("productId", productVariantId, "productFeatureApplTypeId", "SELECTABLE_FEATURE"));
+
+                //取出当前特征的分类数
+                List<String> productFeatureTypeIds = EntityUtil.getFieldListFromEntityList(productFeatureAndAppls, "productFeatureTypeId", true);
+
+                //查找当前变型商品的特征id
+                List<String> currProductFeatureIds = EntityUtil.getFieldListFromEntityList(
+                        delegator.findByAndCache("ProductFeatureAndAppl", UtilMisc.toMap("productId", productId)), "productFeatureId", true);
+
+                for(String productFeatureTypeId:productFeatureTypeIds){
+
+                    Map<String,Object> productFeature = FastMap.newInstance();
+
+                    //TODO 取得当前特征类别的中文
+                    productFeature.put("productFeatureTypeId",productFeatureTypeId);
+
+                    List<GenericValue> productSelectFeatures = EntityUtil.filterByAnd(productFeatureAndAppls,UtilMisc.toMap("productFeatureTypeId",productFeatureTypeId));
+
+                    List<Object> productSelectFeatureList = FastList.newInstance();
+
+                    for(GenericValue productSelectFeature:productSelectFeatures){
+
+                        Map<String,Object> productSelectFeatureMap = FastMap.newInstance();
+                        productSelectFeatureMap.put("productFeatureId", productSelectFeature.getString("productFeatureId"));
+                        productSelectFeatureMap.put("description", productSelectFeature.getString("description"));
+
+                        if(currProductFeatureIds.contains(productSelectFeature.getString("productFeatureId"))){
+                            productSelectFeatureMap.put("selected","true");
+                        }else{
+                            productSelectFeatureMap.put("selected","false");
+                        }
+
+                        productSelectFeatureList.add(productSelectFeatureMap);
+
+                    }
+
+                    productFeature.put("productSelectFeatureList", productSelectFeatureList);
+
+                    productFeatures.add(productFeature);
+
+                }
+
+                result.put("productFeatures",productFeatures);
+
+            }
+
+
+
+        }catch (GenericEntityException e){
+            Debug.logError(e, module);
+            return ServiceUtil.returnError(e.getMessage());
+        }
 
         return result;
 
