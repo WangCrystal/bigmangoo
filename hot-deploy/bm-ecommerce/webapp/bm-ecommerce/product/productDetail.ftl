@@ -46,32 +46,31 @@ under the License.
         </#if>
 
         <#if productFeatures?has_content>
-            <#list productFeatures as productFeature>
 
-                <form role="form">
-                    <div class="form-group">
-                        <strong class='col-md-2'>${(productFeature.productFeatureTypeId)!}</strong>
-                        <div class="col-md-10">
-                            <#if productFeature.productSelectFeatureList?has_content>
-                                <#list productFeature.productSelectFeatureList as productSelectFeature>
-                                    <#if productSelectFeature.selected == "true">
-                                        <a href="#"><span class="label label-primary">${(productSelectFeature.description)!}</span></a>
-                                    <#elseif productSelectFeature.selected == "false">
-                                        <a href="#"><span class="label label-default">${(productSelectFeature.description)!}</span></a>
-                                    </#if>
-                                </#list>
-                            </#if>
-                        </div>
+            <#list productFeatures as productFeature>
+                <div class="form-group">
+                    <strong class='col-md-2'>${(productFeature.productFeatureTypeId)!}</strong>
+                    <div class="col-md-10">
+                        <#if productFeature.productSelectFeatureList?has_content>
+                            <#list productFeature.productSelectFeatureList as productSelectFeature>
+                                <#if productSelectFeature.selected == "true">
+                                    <a href="#"><span class="label label-primary">${(productSelectFeature.description)!}</span></a>
+                                <#elseif productSelectFeature.selected == "false">
+                                    <a href="#"><span class="label label-default">${(productSelectFeature.description)!}</span></a>
+                                </#if>
+                            </#list>
+                        </#if>
                     </div>
-                </form>
+                </div>
 
             </#list>
 
         </#if>
 
-        <form class="form-inline">
+        <form class="form-inline" action="<@ofbizUrl>additem</@ofbizUrl>" method="post">
             <div class="form-group" style="margin-top:10px;">
-                <input type="text" class="form-control" id="exampleInputName2" placeholder="数量" value="1">
+                <input type="hidden" name="add_product_id" value="${(productInfo.productId)!}"/>
+                <input type="text" name="quantity" class="form-control" placeholder="数量" value="1">
                 <button type="submit" class="btn btn-warning">加入购物车</button>
             </div>
         </form>

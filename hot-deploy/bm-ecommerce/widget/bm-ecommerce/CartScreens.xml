@@ -30,6 +30,8 @@ under the License.
                 <set field="rightbarScreenName" value="cartCountWidget" global="true"/>
                 <set field="rightbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/CartScreens.xml" global="true"/>
 
+                <script location="component://bm-ecommerce/webapp/bm-ecommerce/WEB-INF/actions/cart/showcart.groovy"/>
+
             </actions>
             <widgets>
                 <decorator-screen name="three-column-base-decorator" location="${parameters.mainDecoratorLocation}">

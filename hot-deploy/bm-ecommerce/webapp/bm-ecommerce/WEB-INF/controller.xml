@@ -124,6 +124,13 @@ under the License.
     <request-map uri="showcart"><security https="false" auth="false"/><response name="success" type="view" value="showcart"/></request-map>
     <!-- 结算界面 -->
     <request-map uri="checkout"><security https="false" auth="false"/><response name="success" type="view" value="checkout"/></request-map>
+    <!-- 加入商品至购物车 -->
+    <request-map uri="additem">
+        <security https="false" auth="false"/>
+        <event type="java" path="com.bigmangoo.cart.CartEvents" invoke="addToCart"/>
+        <response name="success" type="view-last" value="showcart" save-last-view="true"/>
+        <response name="error" type="view" value="showcart"/>
+    </request-map>
 
     <!-- 用户相关 -->
     <!-- 基本信息 -->

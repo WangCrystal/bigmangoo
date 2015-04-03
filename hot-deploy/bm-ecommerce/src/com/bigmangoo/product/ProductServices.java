@@ -49,6 +49,7 @@ public class ProductServices {
 
     /**
      * 校验当前商品ID是否被支持
+     * 目前支持单一商品和虚拟商品两项
      * @param ctx
      * @param context
      * @return
@@ -109,6 +110,7 @@ public class ProductServices {
             List<GenericValue> productPriceViewList = delegator.findByAndCache("ProductAndPriceView", UtilMisc.toMap("productId", productId, "currencyUomId", productStore.getString("defaultCurrencyUomId"), "productPriceTypeId", "DEFAULT_PRICE", "productPricePurposeId", "PURCHASE"));
             productPriceViewList = EntityUtil.filterByDate(productPriceViewList);
             GenericValue productPriceViewMap = EntityUtil.getFirst(productPriceViewList);
+            productInfo.put("productId", productPriceViewMap.getString("productId"));//产品ID
             productInfo.put("productName", productPriceViewMap.getString("productName"));//产品名称
             productInfo.put("productPrice",productPriceViewMap.getString("price"));//产品价格
             productInfo.put("productUomId",productPriceViewMap.getString("currencyUomId"));//产品价格uom
