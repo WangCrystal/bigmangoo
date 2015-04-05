@@ -16,24 +16,24 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<form class="form-horizontal" action="#" method="post">
+<form class="form-horizontal" action="<@ofbizUrl>updatePassword</@ofbizUrl>" method="post">
 
     <div class="form-group">
         <label for="password" class="col-sm-2 control-label">原密码</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" id="password" name="PASSWORD">
+            <input type="password" class="form-control" id="currentPassword" name="currentPassword">
         </div>
     </div>
     <div class="form-group">
         <label for="password" class="col-sm-2 control-label">新密码</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" id="password" name="PASSWORD">
+            <input type="password" class="form-control" id="newPassword" name="newPassword">
         </div>
     </div>
     <div class="form-group">
-        <label for="password" class="col-sm-2 control-label">密码</label>
+        <label for="password" class="col-sm-2 control-label">确认密码</label>
         <div class="col-sm-10">
-            <input type="password" class="form-control" id="password" name="PASSWORD">
+            <input type="password" class="form-control" id="newPasswordVerify" name="newPasswordVerify">
         </div>
     </div>
     <div class="form-group">

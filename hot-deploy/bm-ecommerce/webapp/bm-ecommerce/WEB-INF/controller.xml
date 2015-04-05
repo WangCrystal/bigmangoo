@@ -134,15 +134,20 @@ under the License.
 
     <!-- 用户相关 -->
     <!-- 基本信息 -->
-    <request-map uri="customerInfo"><security https="false" auth="false"/><response name="success" type="view" value="customerInfo"/></request-map>
+    <request-map uri="customerInfo"><security https="true" auth="true"/><response name="success" type="view" value="customerInfo"/></request-map>
     <!-- 订单管理 -->
-    <request-map uri="orderHistory"><security https="false" auth="false"/><response name="success" type="view" value="orderHistory"/></request-map>
+    <request-map uri="orderHistory"><security https="true" auth="true"/><response name="success" type="view" value="orderHistory"/></request-map>
     <!-- 订单详情 -->
-    <request-map uri="orderDetail"><security https="false" auth="false"/><response name="success" type="view" value="orderDetail"/></request-map>
+    <request-map uri="orderDetail"><security https="true" auth="true"/><response name="success" type="view" value="orderDetail"/></request-map>
     <!-- 我的密码 -->
-    <request-map uri="changepassword"><security https="false" auth="false"/><response name="success" type="view" value="changepassword"/></request-map>
+    <request-map uri="changepassword"><security https="true" auth="true"/><response name="success" type="view" value="changepassword"/></request-map>
+    <request-map uri="updatePassword">
+        <security https="true" auth="true"/>
+        <event name="checkExternalLoginKey" type="java" path="com.bigmangoo.person.PersonEvents" invoke="updatePassword"/>
+        <response name="success" type="view" value="changepassword"/>
+    </request-map>
     <!-- 地址管理 -->
-    <request-map uri="customerAddress"><security https="false" auth="false"/><response name="success" type="view" value="customerAddress"/></request-map>
+    <request-map uri="customerAddress"><security https="true" auth="true"/><response name="success" type="view" value="customerAddress"/></request-map>
 
     <!-- 试图 -->
     <view-map name="main" type="screen" page="component://bm-ecommerce/widget/bm-ecommerce/HomeScreens.xml#main"/>

@@ -16,62 +16,47 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<table class="table table-condensed">
 
-    <thead>
-    <tr>
-        <td><strong>订单</strong></td>
-        <td><strong>金额</strong></td>
-        <td><strong>状态</strong></td>
-        <td><strong>操作</strong></td>
-    </tr>
-    </thead>
 
-    <tbody>
-    <tr>
-        <td>
-            WSCO10001
-        </td>
-        <td>19</td>
-        <td>已批准</td>
-        <td>
-            <a href="orderdetail.html">查看</a>
-        </td>
-    </tr>
+<#if orderHeaderList?has_content>
 
-    <tr>
-        <td>
-            WSCO10001
-        </td>
-        <td>19</td>
-        <td>已批准</td>
-        <td>
-            <a href="orderdetail.html">查看</a>
-        </td>
-    </tr>
+    <table class="table table-condensed">
 
-    <tr>
-        <td>
-            WSCO10001
-        </td>
-        <td>19</td>
-        <td>已批准</td>
-        <td>
-            <a href="orderdetail.html">查看</a>
-        </td>
-    </tr>
+        <thead>
+        <tr>
+            <td><strong>订单</strong></td>
+            <td><strong>金额</strong></td>
+            <td><strong>状态</strong></td>
+            <td><strong>操作</strong></td>
+        </tr>
+        </thead>
 
-    <tr>
-        <td>
-            WSCO10001
-        </td>
-        <td>19</td>
-        <td>已批准</td>
-        <td>
-            <a href="orderdetail.html">查看</a>
-        </td>
-    </tr>
+        <tbody>
 
-    </tbody>
+                <#list orderHeaderList as orderHeader>
 
-</table>
+                    <tr>
+                        <td>
+                            ${orderHeader.orderId}
+                        </td>
+                        <td>
+                            <@ofbizCurrency amount=orderHeader.grandTotal isoCode=orderHeader.currencyUom />
+                        </td>
+                        <td>
+                            <#assign status = orderHeader.getRelatedOneCache("StatusItem") />
+                            ${status.get("description",locale)}
+                        </td>
+                        <td>
+                            <a href="<@ofbizUrl>orderDetail</@ofbizUrl>">查看</a>
+                        </td>
+                    </tr>
+
+                </#list>
+
+        </tbody>
+
+    </table>
+
+<#else>
+    没有订单
+</#if>

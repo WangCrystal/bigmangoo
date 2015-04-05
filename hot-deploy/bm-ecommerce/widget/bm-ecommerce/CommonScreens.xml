@@ -81,6 +81,11 @@ under the License.
                             <!-- 网站目录导航 -->
                             <include-screen name="siteCatalogWidget" location="component://bm-ecommerce/widget/bm-ecommerce/CatalogScreens.xml"/>
 
+                            <!-- 网站错误提示 -->
+                            <platform-specific>
+                                <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/common/site-messages.ftl"/></html>
+                            </platform-specific>
+
                             <decorator-section-include name="body"/>
 
                         </container>

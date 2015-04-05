@@ -26,6 +26,9 @@ under the License.
         <section>
             <actions>
 
+                <!-- 当前二次目录 -->
+                <set field="navItem" value="customerInfo"/>
+
                 <!-- 网站分类列表 -->
                 <set field="leftbarScreenName" value="personNavWidget" global="true"/>
                 <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml" global="true"/>
@@ -50,9 +53,14 @@ under the License.
         <section>
             <actions>
 
+                <!-- 当前二次目录 -->
+                <set field="navItem" value="orderHistory"/>
+
                 <!-- 网站分类列表 -->
                 <set field="leftbarScreenName" value="personNavWidget" global="true"/>
                 <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml" global="true"/>
+
+                <script location="component://bm-ecommerce/webapp/bm-ecommerce/WEB-INF/actions/order/orderHistory.groovy"/>
 
             </actions>
             <widgets>
@@ -74,9 +82,12 @@ under the License.
         <section>
             <actions>
 
+                <!-- 当前二次目录 -->
+                <set field="navItem" value="orderDetail"/>
+
                 <!-- 网站分类列表 -->
                 <set field="leftbarScreenName" value="personNavWidget" global="true"/>
-                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/PersonScreens.xml" global="true"/>
+                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml" global="true"/>
 
             </actions>
             <widgets>
@@ -98,9 +109,12 @@ under the License.
         <section>
             <actions>
 
+                <!-- 当前二次目录 -->
+                <set field="navItem" value="changepassword"/>
+
                 <!-- 网站分类列表 -->
                 <set field="leftbarScreenName" value="personNavWidget" global="true"/>
-                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/PersonScreens.xml" global="true"/>
+                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml" global="true"/>
 
             </actions>
             <widgets>
@@ -122,9 +136,12 @@ under the License.
         <section>
             <actions>
 
+                <!-- 当前二次目录 -->
+                <set field="navItem" value="customerAddress"/>
+
                 <!-- 网站分类列表 -->
                 <set field="leftbarScreenName" value="personNavWidget" global="true"/>
-                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/PersonScreens.xml" global="true"/>
+                <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml" global="true"/>
 
             </actions>
             <widgets>

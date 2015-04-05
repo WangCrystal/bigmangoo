@@ -54,6 +54,11 @@ under the License.
                 <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
 
+                        <!-- 网站错误提示 -->
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/common/site-messages.ftl"/></html>
+                        </platform-specific>
+
                         <platform-specific>
                             <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/login.ftl"/></html>
                         </platform-specific>
@@ -72,6 +77,11 @@ under the License.
             <widgets>
                 <decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
+
+                        <!-- 网站错误提示 -->
+                        <platform-specific>
+                            <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/common/site-messages.ftl"/></html>
+                        </platform-specific>
 
                         <platform-specific>
                             <html><html-template location="component://bm-ecommerce/webapp/bm-ecommerce/newcustomer.ftl"/></html>
