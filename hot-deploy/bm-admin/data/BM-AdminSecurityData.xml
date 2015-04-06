@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-engine-xml>
+    <SecurityPermission description="View operations in the BM-Admin Component." permissionId="BM-ADMIN_VIEW"/>
+    <SecurityPermission description="Create operations in the BM-Admin Component." permissionId="BM-ADMIN_CREATE"/>
+    <SecurityPermission description="Update operations in the BM-Admin Component." permissionId="BM-ADMIN_UPDATE"/>
+    <SecurityPermission description="Delete operations in the BM-Admin Component." permissionId="BM-ADMIN_DELETE"/>
+    <SecurityPermission description="ALL operations in the BM-Admin Component." permissionId="BM-ADMIN_ADMIN"/>
+    <SecurityGroupPermission groupId="FULLADMIN" permissionId="BM-ADMIN_ADMIN"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="BM-ADMIN_CREATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="BM-ADMIN_DELETE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="BM-ADMIN_UPDATE"/>
+    <SecurityGroupPermission groupId="FLEXADMIN" permissionId="BM-ADMIN_VIEW"/>
+    <SecurityGroupPermission groupId="VIEWADMIN" permissionId="BM-ADMIN_VIEW"/>
+    <SecurityGroupPermission groupId="BIZADMIN" permissionId="BM-ADMIN_ADMIN"/>
+</entity-engine-xml>
