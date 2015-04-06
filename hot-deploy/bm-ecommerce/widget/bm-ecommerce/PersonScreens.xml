@@ -143,6 +143,8 @@ under the License.
                 <set field="leftbarScreenName" value="personNavWidget" global="true"/>
                 <set field="leftbarScreenLocation" value="component://bm-ecommerce/widget/bm-ecommerce/PersonScreens.xml" global="true"/>
 
+                <script location="component://bm-ecommerce/webapp/bm-ecommerce/WEB-INF/actions/person/customerAddress.groovy"/>
+
             </actions>
             <widgets>
                 <decorator-screen name="three-column-base-decorator" location="${parameters.mainDecoratorLocation}">

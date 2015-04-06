@@ -31,6 +31,7 @@ under the License.
 
     <service-resource type="model" loader="main" location="servicedef/services_product.xml"/>
     <service-resource type="model" loader="main" location="servicedef/services_category.xml"/>
+    <service-resource type="model" loader="main" location="servicedef/services_person.xml"/>
 
     <test-suite loader="main" location="testdef/BM-EcommerceTests.xml"/>
 

@@ -19,20 +19,35 @@ under the License.
 <table class="table table-condensed">
 
     <tbody>
-    <tr>
-        <td>
-            梁小小
-        </td>
-        <td>1321321321</td>
-        <td>xx路xx号</td>
-        <td>
-            <a href="#">设为默认地址</a>
-        </td>
-        <td>
-            <a class="btn btn-success btn-xs pull-right" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">修改</a>
-        </td>
-    </tr>
 
+    <#list customerAddressList as customerAddressMap>
+
+        <tr>
+            <td>
+                ${(customerAddressMap.paAttnName)!}
+            </td>
+            <td>
+                ${(customerAddressMap.paToName)!}
+            </td>
+            <td>
+                ${(customerAddressMap.paAddress1)!}
+            </td>
+            <td>
+                <#if defaultShipAddr == customerAddressMap.contactMechId>
+                    默认收货地址
+                <#else>
+                    <form name="defaultShippingAddressForm_${customerAddressMap.contactMechId}" method="post" action="<@ofbizUrl>setCustomerDefaultAddress</@ofbizUrl>">
+                        <input type="hidden" name="defaultShipAddr" value="${customerAddressMap.contactMechId}" />
+                    </form>
+                    <a href="javascript:document.defaultShippingAddressForm_${customerAddressMap.contactMechId}.submit();">设为默认地址</a>
+                </#if>
+            </td>
+            <td>
+                <a class="btn btn-success btn-xs pull-right" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">修改</a>
+            </td>
+        </tr>
+
+    </#list>
 
     </tbody>
 

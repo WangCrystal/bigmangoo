@@ -21,27 +21,33 @@ package com.bigmangoo.person;
 import org.ofbiz.base.util.UtilMisc;
 import org.ofbiz.entity.Delegator;
 import org.ofbiz.entity.GenericValue;
+import org.ofbiz.product.store.ProductStoreWorker;
 import org.ofbiz.service.GenericServiceException;
 import org.ofbiz.service.LocalDispatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * PersonEvents
- * Created by lianghh on 15/4/5.
  */
 public class PersonEvents {
 
     public static final String module = PersonEvents.class.getName();
 
+    /**
+     * 更换当前用户密码
+     * @param request
+     * @param response
+     * @return
+     */
     public static String updatePassword(HttpServletRequest request, HttpServletResponse response) {
 
         LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
         final Delegator delegator = (Delegator)request.getAttribute("delegator");
         GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
 
-        String currentPassword = request.getParameter("currentPassword");
         String newPassword = request.getParameter("newPassword");
         String newPasswordVerify = request.getParameter("newPasswordVerify");
 
@@ -51,18 +57,26 @@ public class PersonEvents {
             return "success";
         }
 
-        //TODO 校验当前密码是否正确
-
         // 调用服务更换密码
         try{
-            dispatcher.runSync("updatePassword", UtilMisc.toMap(
-                    "currentPassword",currentPassword,
+
+            Map<String,Object> serviceResult = dispatcher.runSync("updatePassword", UtilMisc.toMap(
                     "newPassword",newPassword,
                     "newPasswordVerify",newPasswordVerify,
-                    "userLoginId",userLogin.getString("userLoginId")));
+                    "userLoginId",userLogin.getString("userLoginId"),
+                    "userLogin",userLogin));
+
+            if(serviceResult.containsKey("errorMessage")){
+                request.setAttribute("_BM_ERROR_MESSAGE_", "修改密码失败。" + serviceResult.get("errorMessage"));
+            }else {
+                request.setAttribute("_BM_SUCCESS_MESSAGE_", "成功更新密码！");
+            }
+
         } catch (GenericServiceException e){
 
-            //TODO
+            request.setAttribute("_BM_ERROR_MESSAGE_", "修改密码失败");
+
+            e.printStackTrace();
             return "success";
         }
 
@@ -70,4 +84,40 @@ public class PersonEvents {
 
     }
 
+    /**
+     * 设置当前用户的默认收货地址
+     * @param request
+     * @param response
+     * @return
+     */
+    public static String setCustomerDefaultAddress(HttpServletRequest request, HttpServletResponse response) {
+
+        LocalDispatcher dispatcher = (LocalDispatcher) request.getAttribute("dispatcher");
+        GenericValue productStore = ProductStoreWorker.getProductStore(request);
+        GenericValue userLogin = (GenericValue) request.getSession().getAttribute("userLogin");
+
+        String productStoreId = productStore.getString("productStoreId");
+        String partyId = userLogin.getString("partyId");
+
+        String defaultShipAddr = request.getParameter("defaultShipAddr");
+
+        try{
+            Map<String,Object> serviceResult = dispatcher.runSync("setPartyProfileDefaults",
+                    UtilMisc.toMap("productStoreId",productStoreId,"partyId",partyId,"defaultShipAddr",defaultShipAddr,"userLogin",userLogin));
+
+            if(serviceResult.containsKey("errorMessage")){
+                request.setAttribute("_BM_ERROR_MESSAGE_", "设置收货地址失败。" + serviceResult.get("errorMessage"));
+            }
+
+        } catch (GenericServiceException e){
+
+            request.setAttribute("_BM_ERROR_MESSAGE_", "设置收货地址失败");
+
+            e.printStackTrace();
+            return "success";
+        }
+
+        return "success";
+
+    }
 }

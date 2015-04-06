@@ -19,12 +19,6 @@ under the License.
 <form class="form-horizontal" action="<@ofbizUrl>updatePassword</@ofbizUrl>" method="post">
 
     <div class="form-group">
-        <label for="password" class="col-sm-2 control-label">原密码</label>
-        <div class="col-sm-10">
-            <input type="password" class="form-control" id="currentPassword" name="currentPassword">
-        </div>
-    </div>
-    <div class="form-group">
         <label for="password" class="col-sm-2 control-label">新密码</label>
         <div class="col-sm-10">
             <input type="password" class="form-control" id="newPassword" name="newPassword">

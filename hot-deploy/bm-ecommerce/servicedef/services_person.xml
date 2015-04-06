@@ -1,4 +1,5 @@
-<#--
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
 distributed with this work for additional information
@@ -16,17 +17,17 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<div class="well text-center">
 
-    <strong>小计</strong>
-    <p>1</p>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+    <description>用户相关的服务</description>
 
-    <strong>调整</strong>
-    <p>2</p>
+    <!-- 通过用户ID取得用户的货运地址 -->
+    <service name="getCustomerAddressByPartyId" engine="java"
+             location="com.bigmangoo.person.PersonServices" invoke="getCustomerAddressByPartyId">
+        <description>通过用户ID取得用户的货运地址</description>
+        <attribute name="partyId" type="String" mode="IN" optional="false"/>
+        <attribute name="customerAddressList" type="List" mode="OUT" optional="false"/>
+    </service>
 
-    <strong>购物车总计</strong>
-    <p>3</p>
-
-    <a href="<@ofbizUrl>checkout</@ofbizUrl>" type="button" class="btn btn-info center-block">结账</a>
-
-</div>
+</services>
