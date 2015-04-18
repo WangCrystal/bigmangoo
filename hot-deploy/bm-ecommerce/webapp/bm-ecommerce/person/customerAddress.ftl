@@ -43,8 +43,9 @@ under the License.
                 </#if>
             </td>
             <td>
-                <a class="btn btn-success btn-xs pull-right" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">修改</a>
+                <a class="btn btn-success btn-xs pull-right" data-toggle="collapse" href="#editAddressWell" aria-expanded="false" aria-controls="editAddressWell">修改</a>
             </td>
+
         </tr>
 
     </#list>

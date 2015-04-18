@@ -20,7 +20,7 @@ under the License.
     <div class="panel-heading">
         <h3 class="panel-title">
             收货地址
-            <a class="btn btn-success btn-xs pull-right" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">新建地址</a>
+            <a class="btn btn-success btn-xs pull-right" data-toggle="collapse" href="#newAddressWell" aria-expanded="false" aria-controls="newAddressWell">新建地址</a>
         </h3>
     </div>
     <div class="panel-body">
@@ -42,7 +42,7 @@ under the License.
 </div>
 
 <!-- 新建地址窗 -->
-<div class="collapse" id="collapseExample">
+<div class="collapse" id="newAddressWell">
     <div class="well">
 
         <form class="form-horizontal" role="form">

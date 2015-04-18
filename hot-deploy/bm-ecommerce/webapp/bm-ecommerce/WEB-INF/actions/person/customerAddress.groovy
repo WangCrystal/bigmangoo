@@ -28,4 +28,4 @@ context.customerAddressList = serviceResult.customerAddressList
 
 //获取默认值
 def profiledefs = delegator.findByPrimaryKey("PartyProfileDefault", [partyId : partyId, productStoreId : productStore.productStoreId])
-context.defaultShipAddr = profiledefs.defaultShipAddr
+context.defaultShipAddr = profiledefs?.defaultShipAddr
