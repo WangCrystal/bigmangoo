@@ -21,7 +21,7 @@ import org.ofbiz.product.store.ProductStoreWorker
 
 //调用服务取得产品基本数据
 def productStore = ProductStoreWorker.getProductStore(request)
-def serviceResult = dispatcher.runSync("getProductDetailById",[productId: productId, productStore:productStore])
+def serviceResult = dispatcher.runSync("bg_getProductDetailById",[productId: productId, productStore:productStore])
 context.productInfo = serviceResult.productInfo
 context.productImages = serviceResult.productImages
 context.productFeatures = serviceResult.productFeatures

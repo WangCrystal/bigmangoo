@@ -106,7 +106,7 @@ under the License.
     <!-- 校验产品ID -->
     <request-map uri="checkProductId">
         <security https="false" auth="false"/>
-        <event type="service" invoke="checkProductId"/>
+        <event type="service" invoke="bg_checkProductId"/>
         <response name="success" type="request-redirect" value="productDetail">
             <redirect-parameter name="productId" from="variantProductId"/>
         </response>
