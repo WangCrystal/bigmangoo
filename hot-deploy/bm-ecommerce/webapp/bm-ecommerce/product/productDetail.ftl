@@ -54,9 +54,9 @@ under the License.
                         <#if productFeature.productSelectFeatureList?has_content>
                             <#list productFeature.productSelectFeatureList as productSelectFeature>
                                 <#if productSelectFeature.selected == "true">
-                                    <a href="<@ofbizUrl>checkProductId?productId=${(productSelectFeature.variantProductId)!}&productFeatureId=${(productSelectFeature.productFeatureId)!}</@ofbizUrl>"><span class="label label-primary">${(productSelectFeature.description)!}</span></a>
+                                    <a href="#"><span class="label label-primary">${(productSelectFeature.description)!}</span></a>
                                 <#elseif productSelectFeature.selected == "false">
-                                    <a href="<@ofbizUrl>checkProductId?productId=${(productSelectFeature.variantProductId)!}&productFeatureId=${(productSelectFeature.productFeatureId)!}</@ofbizUrl>"><span class="label label-default">${(productSelectFeature.description)!}</span></a>
+                                    <a href="#"><span class="label label-default">${(productSelectFeature.description)!}</span></a>
                                 </#if>
                             </#list>
                         </#if>
