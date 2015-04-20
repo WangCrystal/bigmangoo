@@ -23,6 +23,6 @@ import org.ofbiz.product.catalog.CatalogWorker
 def currentCatalogId = CatalogWorker.getCurrentCatalogId(request)
 
 //调用服务取得数据
-def serviceResult = dispatcher.runSync("getCategoryTreeByCatalogId",[currentCatalogId: currentCatalogId])
+def serviceResult = dispatcher.runSync("bg_getCategoryTreeByCatalogId",[currentCatalogId: currentCatalogId])
 def categoryTree = serviceResult.categoryTree
 context.categoryTree = categoryTree
