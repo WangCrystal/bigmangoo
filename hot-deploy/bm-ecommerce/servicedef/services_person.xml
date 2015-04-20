@@ -23,7 +23,7 @@ under the License.
     <description>用户相关的服务</description>
 
     <!-- 通过用户ID取得用户的货运地址 -->
-    <service name="getCustomerAddressByPartyId" engine="java"
+    <service name="bg_getCustomerAddressByPartyId" engine="java"
              location="com.bigmangoo.person.PersonServices" invoke="getCustomerAddressByPartyId">
         <description>通过用户ID取得用户的货运地址</description>
         <attribute name="partyId" type="String" mode="IN" optional="false"/>

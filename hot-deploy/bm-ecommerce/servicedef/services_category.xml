@@ -23,7 +23,7 @@ under the License.
     <description>分类相关的服务</description>
 
     <!-- 通过目录ID取得当前目录下所有的分类 -->
-    <service name="getCategoryTreeByCatalogId" engine="java"
+    <service name="bg_getCategoryTreeByCatalogId" engine="java"
              location="com.bigmangoo.category.CategoryServices" invoke="getCategoryTreeByCatalogId">
         <description>通过目录ID取得分类树的信息</description>
         <attribute name="currentCatalogId" type="String" mode="IN" optional="false"/>
