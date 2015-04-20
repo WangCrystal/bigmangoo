@@ -31,11 +31,13 @@ import org.ofbiz.entity.condition.EntityCondition;
 import org.ofbiz.entity.condition.EntityExpr;
 import org.ofbiz.entity.condition.EntityOperator;
 import org.ofbiz.entity.util.EntityUtil;
+import org.ofbiz.product.product.ProductSearch;
+import org.ofbiz.product.product.ProductWorker;
 import org.ofbiz.service.DispatchContext;
+import org.ofbiz.service.GenericServiceException;
 import org.ofbiz.service.LocalDispatcher;
 import org.ofbiz.service.ServiceUtil;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -146,7 +148,7 @@ public class ProductServices {
 
                 List<Object> productFeatures = FastList.newInstance();
 
-                //查找当前商品的虚拟id，取得虚拟id的相关属性
+                //查找当前商品的虚拟id，取得虚拟id的相关属性 //草写错了...这是虚拟产品Id 2B
                 String productVariantId = productVariant.getString("productId");
                 List<GenericValue> productFeatureAndAppls = delegator.findByAndCache("ProductFeatureAndAppl", UtilMisc.toMap("productId", productVariantId, "productFeatureApplTypeId", "SELECTABLE_FEATURE"));
 
@@ -172,6 +174,15 @@ public class ProductServices {
 
                         Map<String,Object> productSelectFeatureMap = FastMap.newInstance();
                         productSelectFeatureMap.put("productFeatureId", productSelectFeature.getString("productFeatureId"));
+                        //get variantProductId
+                        Map resultMap = dispatcher.runSync("getProductVariant",UtilMisc.toMap(
+                                "selectedFeatures",UtilMisc.toMap(productSelectFeature.getString("productFeatureTypeId"),productSelectFeature.getString("productFeatureId")),
+                                "productId",productVariantId));//其实是虚拟ID  2B你写错了 害我调半天
+                        //命名能不能 规范点 //这块的逻辑也有问题....就不应该这么查...你个2B...3小时 光看你几吧代码去了...
+                        //这什么逻辑?什么逻辑?你大爷的...几吧代码让你写的.
+                        List<GenericValue> products = (List<GenericValue>)resultMap.get("products");
+                        String varaintProductId = UtilValidate.isEmpty(products)?null:EntityUtil.getFirst(products).getString("productId");
+                        productSelectFeatureMap.put("variantProductId", varaintProductId);
                         productSelectFeatureMap.put("description", productSelectFeature.getString("description"));
 
                         if(currProductFeatureIds.contains(productSelectFeature.getString("productFeatureId"))){
@@ -197,6 +208,9 @@ public class ProductServices {
 
 
         }catch (GenericEntityException e){
+            Debug.logError(e, module);
+            return ServiceUtil.returnError(e.getMessage());
+        }catch (GenericServiceException e){
             Debug.logError(e, module);
             return ServiceUtil.returnError(e.getMessage());
         }
